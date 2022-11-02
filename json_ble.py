@@ -16,4 +16,4 @@ Json BLE Format
 def parse_to_dict(file: str)-> dict:
     with open(file, 'r') as f:
         s = json.load(f)
-    return s["devidces"]
+    return s["devices"]

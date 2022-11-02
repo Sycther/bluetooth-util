@@ -1,0 +1,10 @@
+{
+    "devices":
+    [
+        {
+           "name": "Dell XPS",
+           "MacAdd": "1:0:::0:0",
+           "role" : "Central"
+        }
+    ]
+}

@@ -1,9 +1,8 @@
 import json_ble 
+import blue
 
 def App():
-    current_scan = json_ble.parse_to_dict("test.json")
-
-    print(current_scan[0])
+    blue.scan_nearby()
 
 if __name__ == "__main__":
     App()

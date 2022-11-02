@@ -5,5 +5,38 @@ The purpose of this project is to create a GUI based Bluetooth Utility to show n
 
 Bluetooth API -> Scan Nearby Devices -> Save to local/temp json file -> Display Repository of Saved Scans
 
+
+## Setup
+
+First step is clone the repository,
+
+    git clone https://github.com/Sycther/bluetooth-util
+    cd bluetooth-util
+
+Setup a virtual Python enviornment
+
+*Optional but recommended*
+
+    python -m virtualenv venv
+
+    (windows) 
+    venv/Scripts/activate
+
+    (linux)
+    source /venv/bin/activate
+
+install all the dependencies
+
+    python -m pip install -r requirements.txt
+
+
+If you have trouble installing the PyBluez Library, First install a legacy version of SetupTools
+
+    python -m pip install setuptools==58
+
+## Submitting a Branch
+
 ## Libraries/Repositories
 - PySide2
+- PyBluez
+- SetupTools==58

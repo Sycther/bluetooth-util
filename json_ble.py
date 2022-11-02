@@ -6,7 +6,7 @@ Json BLE Format
     devices:[
         {
             name: Donates Device Name
-            MacAdd: Device's MacAddress
+            addr: Device's MacAddress
             role: Central/Peripheral device
         }
     ]

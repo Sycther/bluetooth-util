@@ -8,6 +8,8 @@ Json BLE Format
             name: Donates Device Name
             addr: Device's MacAddress
             role: Central/Peripheral device
+            class: Device Class in hex
+            type: Description of Device Class
         }
     ]
 }

@@ -36,7 +36,14 @@ If you have trouble installing the PyBluez Library, First install a legacy versi
 
 ## Submitting a Branch
 
-## Libraries/Repositories
+## Requirements
+----
+- Python >= 3.9
+
+#### Libraries Used
 - PySide2
-- PyBluez
-- SetupTools==58
+- PyBluez2
+
+
+## Bugs
+- Your IDE might give an error while importing the "bluetooth" library, otherwise the library works.... somehow...

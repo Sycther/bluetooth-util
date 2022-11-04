@@ -5,6 +5,7 @@ The purpose of this project is to create a GUI based Bluetooth Utility to show n
 
 Bluetooth API -> Scan Nearby Devices -> Save to local/temp json file -> Display Repository of Saved Scans
 
+[https://www.ampedrftech.com/datasheets/cod_definition.pdf]
 
 ## Setup
 
@@ -35,6 +36,8 @@ If you have trouble installing the PyBluez Library, First install a legacy versi
     python -m pip install setuptools==58
 
 ## Submitting a Branch
+
+
 
 ## Requirements
 ----

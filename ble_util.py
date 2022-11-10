@@ -1,19 +1,13 @@
-from bleak import BleakScanner, BLEDevice
-import pickle
-from datetime import datetime
-import os
+from bleak import BleakScanner
+import asyncio
 
-async def scan_now() -> BLEDevice:
-    dt = datetime.now().strftime("%m-%d-%y - %H:%M:%S")
-    devices = await BleakScanner.discover()
+
+class BLEUtility():
+
+    def __init__(self, callback, duration=5) -> None:
+        self.scanner = BleakScanner()
+
+    async def scan(self):
+        self.scanner.start()
+
     
-    with open('saves/{}.pkl'.format(dt), 'wb') as f:
-        pickle.dump(devices, f, -1)
-    return devices
-
-
-def get_previous_scans() -> list:
-    dt: list = []
-    for obj in os.scandir('saves'):
-        dt.append(obj)
-    return dt

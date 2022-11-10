@@ -44,8 +44,8 @@ If you have trouble installing the PyBluez Library, First install a legacy versi
 - Python >= 3.9
 
 #### Libraries Used
-- PySide2
-- PyBluez2
+- PySide6
+- Bleak
 
 
 ## Bugs

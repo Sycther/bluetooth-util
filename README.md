@@ -44,6 +44,7 @@ install all the dependencies
 ### Deliverables
 - [ ] Asyncronous Bluetooth Scanner
   - [x] Save devices to list
+  - [ ] Interpret & Display Device Class
 - [ ] GUI
   - [ ] Design Layout
   - [x] Bluetooth scanning parralell to gui

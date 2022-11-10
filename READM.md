@@ -30,23 +30,20 @@ install all the dependencies
 
     python -m pip install -r requirements.txt
 
-
-If you have trouble installing the PyBluez Library, First install a legacy version of SetupTools
-
-    python -m pip install setuptools==58
-
-## Submitting a Branch
-
-
-
 ## Requirements
-----
 - Python >= 3.9
 
-#### Libraries Used
+### Libraries Used
 - PySide6
 - Bleak
-
+- Qasync
 
 ## Bugs
 - Your IDE might give an error while importing the "bluetooth" library, otherwise the library works.... somehow...
+  
+### Deliverables
+- [ ] Asyncronous Bluetooth Scanner
+  - [x] Save devices to list
+- [ ] GUI
+  - [ ] Design Layout
+  - [x] Bluetooth scanning parralell to gui

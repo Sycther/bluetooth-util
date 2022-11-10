@@ -1,6 +1,5 @@
 import asyncio
 from bleak import BleakScanner
-import ble_util
 
 from PySide6.QtWidgets import (
     QWidget,

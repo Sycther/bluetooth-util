@@ -44,6 +44,8 @@ install all the dependencies
 ### Deliverables
 - [ ] Asyncronous Bluetooth Scanner
   - [x] Save devices to list
+  - [ ] periodic scans
+    - [ ] Remove lost devies after 2nd scan of no ping
   - [ ] Interpret & Display Device Class
 - [ ] GUI
   - [ ] Design Layout

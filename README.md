@@ -39,7 +39,7 @@ install all the dependencies
 - Qasync
 
 ## Bugs
-- Your IDE might give an error while importing the "bluetooth" library, otherwise the library works.... somehow...
+Your IDE might give an error while importing the some libraries, otherwise the library works.... somehow...
   
 ### Deliverables
 - [ ] Asyncronous Bluetooth Scanner
@@ -47,6 +47,7 @@ install all the dependencies
   - [ ] periodic scans
     - [ ] Remove lost devies after 2nd scan of no ping
   - [ ] Interpret & Display Device Class
+  - [ ] Detect Connected Devices
 - [ ] GUI
   - [ ] Design Layout
   - [x] Bluetooth scanning parralell to gui

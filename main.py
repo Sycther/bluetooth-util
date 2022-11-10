@@ -1,6 +1,5 @@
 import asyncio
 from BLEUtil import BLEUtil
-from bleak import BleakScanner
 
 from PySide6.QtWidgets import (
     QWidget,
@@ -14,7 +13,7 @@ from PySide6.QtWidgets import (
 
 import functools, sys
 import qasync
-from qasync import asyncSlot, asyncClose, QApplication
+from qasync import asyncSlot, QApplication
 
 ### Constants
 WIN_WIDTH = 800
@@ -53,6 +52,11 @@ class MainWidget(QWidget):
 
     def callback(self, device, ad_data):
         if not device in devices:
+            if device.name == "Bepob":
+                print(device)
+                print(ad_data)
+                for i in device.details:
+                    print(i)
             devices.append(device)
             self.output.setText("\n".join("{}".format(i) for i in self.scanner.discovered_devices))
 

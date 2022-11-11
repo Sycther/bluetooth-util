@@ -14,12 +14,11 @@ from PySide6.QtWidgets import (
 import functools, sys
 import qasync
 from qasync import asyncSlot, QApplication
+import logging
 
 ### Constants
 WIN_WIDTH = 800
 WIN_HEIGHT = 600
-
-devices:list = []
 
 class MainWindow(QMainWindow):
 
@@ -49,22 +48,23 @@ class MainWidget(QWidget):
         self.output = QLabel("No Devices")
         self.layout().addWidget(self.output)
 
+        logging.basicConfig(filename="output",
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S',
+                    level=logging.INFO)
+
+        logging.info("Running Urban Planning")
+
+        self.logger = logging.getLogger('urbanGUI')
+
 
     def callback(self, device, ad_data):
-        if not device in devices:
-            if device.name == "Bepob":
-                print(device)
-                print(ad_data)
-                for i in device.details:
-                    print(i)
-            devices.append(device)
-            self.output.setText("\n".join("{}".format(i) for i in self.scanner.discovered_devices))
+        self.output.setText("\n".join("{}".format(i) for i in self.scanner.discovered_devices))
 
     @asyncSlot()
     async def scan_now(self):
         self.output.setText("")
-
-        devices.clear()
 
         try:
             await self.scanner.scan(3)
@@ -72,10 +72,9 @@ class MainWidget(QWidget):
         except Exception as e:
             print(e)
         else :
-            if len(devices) == 0:
+            if len(self.scanner.discovered_devices) == 0:
                 self.output.setText("No Devices Found")
 
-        print("Done Scanning")
 
 async def main():
     def close_future(future, loop):

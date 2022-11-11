@@ -4,3 +4,6 @@ temp
 temp/*
 saves
 saves/*
+bleak/*
+bleak
+parser.py

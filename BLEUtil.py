@@ -1,5 +1,6 @@
 from bleak import BleakScanner
 import asyncio
+import ble_dict
 
 class BLEUtil(BleakScanner):    
 
@@ -15,9 +16,18 @@ class BLEUtil(BleakScanner):
 
         self.current_devices = self.discovered_devices
 
-    def code_to_desc(code: int) -> str:
-        mask = 1 << 21
-        if code & mask:
-            print(code & mask)
-            print("Audio Device")
-        pass
+    def parse_device_data(self, device) -> str:
+        out = ""
+
+        try:
+            data = device.metadata['manufacturer_data'].popitem()
+        except KeyError:
+            return "No Data Given"
+        cic = data[0]
+        cod = data[1]
+        
+        out = ble_dict.CIC_MAP[cic]
+        if not out:
+            return "Unable to find Matching CIC"
+
+        return out

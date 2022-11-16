@@ -20,13 +20,6 @@ import logging
 WIN_WIDTH = 800
 WIN_HEIGHT = 600
 
-class MainWindow(QMainWindow):
-
-    def __init__(self):
-        super().__init__()
-
-        self.setCentralWidget(MainWidget())
-        status = QStatusBar(self)
 
 class MainWidget(QWidget):
 
@@ -60,7 +53,7 @@ class MainWidget(QWidget):
 
 
     def callback(self, device, ad_data):
-        self.output.setText("\n".join("{}".format(i) for i in self.scanner.discovered_devices))
+        self.output.setText("\n".join("{} - {} - {}".format(i,i.metadata ,self.scanner.parse_device_data(i)) for i in self.scanner.discovered_devices))
 
     @asyncSlot()
     async def scan_now(self):

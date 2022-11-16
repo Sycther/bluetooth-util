@@ -44,9 +44,11 @@ Your IDE might give an error while importing the some libraries, otherwise the l
 ### Deliverables
 - [ ] Asyncronous Bluetooth Scanner
   - [x] Save devices to list
-  - [ ] periodic scans
+  - [ ] periodic scans (Optional)
     - [ ] Remove lost devies after 2nd scan of no ping
   - [ ] Interpret & Display Device Class
+    - [x] CIC (Company ID)
+    - [ ] COD (Class Of Device)
   - [ ] Detect Connected Devices
 - [ ] GUI
   - [ ] Design Layout

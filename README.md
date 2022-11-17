@@ -51,5 +51,5 @@ Your IDE might give an error while importing the some libraries, otherwise the l
     - [ ] COD (Class Of Device)
   - [ ] Detect Connected Devices
 - [ ] GUI
-  - [ ] Design Layout
+  - [x] Design Layout
   - [x] Bluetooth scanning parralell to gui

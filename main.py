@@ -1,46 +1,73 @@
 import asyncio
-from BLEUtil import BLEUtil
+import BLEUtil
+from bleak import BLEDevice
 
 from GUI import Ui_MainWindow
 
-from PySide6.QtWidgets import (
-    QWidget,
-    QLabel,
-    QPushButton,
-    QVBoxLayout,
-    QMainWindow,
-    QStatusBar,
-    QScrollArea
-)
+from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 
 import functools, sys
 import qasync
 from qasync import asyncSlot, QApplication
-import logging
 
 ### Constants
 WIN_WIDTH = 800
 WIN_HEIGHT = 600
+
+
+class BLElistItem(QListWidgetItem, BLEDevice):
+
+    def __init__(self, device = None):
+        super().__init__()
+        self.address = device.address
+        self.name = device.name
+        self.details = device.details
+        self.rssi = device.rssi
+        self.metadata = device.metadata
+
+        self.setSelfText()
+        
+
+    def setSelfText(self):
+        self.setText(self.__str__())
+
+    def __eq__(self, other) -> bool:
+        return self.address == other.address
+
+    def __str__(self) -> str:
+        return "{}\n - {}\n - {}\n-{}".format(self.name, self.address,BLEUtil.parse_device_data(self), self.metadata)
+
 
 class TestWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super(TestWindow, self).__init__()
         self.setupUi(self)
-        self.scanner = BLEUtil(self.callback)
+        self.scanner = BLEUtil.Scanner(self.callback)
+        self.deviceList : BLElistItem = []
 
     def callback(self, device, advertisment_data):
-        if not device in self.scanner.current_devices:
-            out = "{}  ({})\n - {}".format(device.name, device.address, advertisment_data)
-            self.list.addItem(out)
-            self.scanner.current_devices.append(device)
+        if not device in self.deviceList:
+            #out = "{}\n - {}\n - {}\n - {}\n - {}".format(device.name, device.address, self.scanner.parse_device_data(device), device.metadata,advertisment_data)
+            ## Create
+            dev = BLElistItem(device)
+            self.list.addItem(dev)
+            self.deviceList.append(dev)
+        else :
+            #Update
+            #index = self.deviceList.index(device)
+            #self.deviceList[index].metadata = device.metadata
+            #self.deviceList[index].setSelfText()
+            pass
 
     @asyncSlot()
     async def scanNow(self):
         print("Scanning")
+        self.list.clear()
+        self.deviceList = []
         try:
-            await self.scanner.scan(3)
-            pass
+            await self.scanner.scan(10)
+            print("total: ", len(self.deviceList))
         except Exception as e:
             print(e)
         else :

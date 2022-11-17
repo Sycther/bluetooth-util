@@ -14,7 +14,8 @@ class BLEUtil(BleakScanner):
         async with self:
             await asyncio.sleep(duration)
 
-        self.current_devices = self.discovered_devices
+        for dev in self.current_devices:
+            print(dev, dev.metadata)
 
     def parse_device_data(self, device) -> str:
         out = ""

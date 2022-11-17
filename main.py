@@ -1,6 +1,8 @@
 import asyncio
 from BLEUtil import BLEUtil
 
+from GUI import Ui_MainWindow
+
 from PySide6.QtWidgets import (
     QWidget,
     QLabel,
@@ -20,45 +22,22 @@ import logging
 WIN_WIDTH = 800
 WIN_HEIGHT = 600
 
+class TestWindow(QMainWindow, Ui_MainWindow):
 
-class MainWidget(QWidget):
-
-    def __init__(self, signal=None):
-        super().__init__()
-
+    def __init__(self):
+        super(TestWindow, self).__init__()
+        self.setupUi(self)
         self.scanner = BLEUtil(self.callback)
 
-        self.setLayout(QVBoxLayout())
-
-        label = QLabel("Bluetooth Utility")
-        self.layout().addWidget(label)
-        
-        btn = QPushButton("Scan Now", self)
-        btn.clicked.connect(self.scan_now)
-        self.layout().addWidget(btn)
-
-        self.scroll = QScrollArea()
-        self.output = QLabel("No Devices")
-        self.layout().addWidget(self.output)
-
-        logging.basicConfig(filename="output",
-                    filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.INFO)
-
-        logging.info("Running Urban Planning")
-
-        self.logger = logging.getLogger('urbanGUI')
-
-
-    def callback(self, device, ad_data):
-        self.output.setText("\n".join("{} - {} - {}".format(i,i.metadata ,self.scanner.parse_device_data(i)) for i in self.scanner.discovered_devices))
+    def callback(self, device, advertisment_data):
+        if not device in self.scanner.current_devices:
+            out = "{}  ({})\n - {}".format(device.name, device.address, advertisment_data)
+            self.list.addItem(out)
+            self.scanner.current_devices.append(device)
 
     @asyncSlot()
-    async def scan_now(self):
-        self.output.setText("")
-
+    async def scanNow(self):
+        print("Scanning")
         try:
             await self.scanner.scan(3)
             pass
@@ -66,8 +45,7 @@ class MainWidget(QWidget):
             print(e)
         else :
             if len(self.scanner.discovered_devices) == 0:
-                self.output.setText("No Devices Found")
-
+                print("Nothing")
 
 async def main():
     def close_future(future, loop):
@@ -76,7 +54,6 @@ async def main():
 
     loop = asyncio.get_event_loop()
     future = asyncio.Future()
-
     app = QApplication.instance()
 
     if hasattr(app, "aboutToQuit"):
@@ -84,9 +61,11 @@ async def main():
             functools.partial(close_future, future, loop)
         )
 
-    mw = MainWidget()
+    mw = TestWindow()
     mw.resize(WIN_WIDTH, WIN_HEIGHT)
     mw.show()
+    
+    app.exec()
 
     await future
     return True
@@ -94,5 +73,7 @@ async def main():
 if __name__ == "__main__":
     try:
         qasync.run(main())
-    except asyncio.exceptions.CancelledError:
+    #except asyncio.exceptions.CancelledError:
+    except Exception as e:
+        print(e)
         sys.exit(0)

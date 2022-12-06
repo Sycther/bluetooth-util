@@ -61,9 +61,6 @@ class BLElistItem(QListWidgetItem):
     def setSelfText(self):
         self.setText(self.__str__())
 
-    def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
-
     def __eq__(self, other) -> bool:
         return self.address == other.address
 
@@ -97,7 +94,7 @@ class TestWindow(QMainWindow, Ui_MainWindow):
         dt = datetime.datetime.now()
         dumps = []
         for device in self.deviceList:
-            dumps.append(json.loads(device.toJson()))
+            dumps.append(device.__dict__)
         with open("saves/{} - {}.{}.{}.json".format(dt.date(), dt.hour, dt.minute, dt.second), 'w') as f:
             json.dump(dumps, f, indent=4)
             
@@ -131,7 +128,6 @@ async def main():
         )
 
     mw = TestWindow()
-    mw.resize(WIN_WIDTH, WIN_HEIGHT)
     mw.show()
     
     app.exec()

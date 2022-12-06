@@ -4,7 +4,7 @@ import asyncio
 class Scanner(BleakScanner):    
 
     def __init__(self, callback = None) -> None:
-        super().__init__(callback, scanning_mode='active')
+        super().__init__(callback)
         self.callback = callback
         self.current_devices: list = []
 

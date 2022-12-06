@@ -44,7 +44,7 @@ Your IDE might give an error while importing the some libraries, otherwise the l
 ### Deliverables
 - [x] Asyncronous Bluetooth Scanner
   - [x] Save devices to list
-  - [ ] periodic scans (Optional)
+  - [x] Json Save Files
   - [x] Interpret & Display Device Class
     - [x] CIC (Company ID)
     - [ ] COD (Class Of Device)

@@ -1,11 +1,10 @@
 from bleak import BleakScanner
 import asyncio
-import ble_dict
 
 class Scanner(BleakScanner):    
 
     def __init__(self, callback = None) -> None:
-        super().__init__(callback)
+        super().__init__(callback, scanning_mode='active')
         self.callback = callback
         self.current_devices: list = []
 
@@ -16,22 +15,5 @@ class Scanner(BleakScanner):
             await asyncio.sleep(duration)
 
         for dev in self.discovered_devices:
-            print(dev, dev.metadata)
-
-
-
-def parse_device_data(device) -> str:
-    out = ""
-
-    try:
-        data = device.metadata['manufacturer_data'].popitem()
-    except KeyError:
-        return "No Data Given"
-    cic = data[0]
-    cod = data[1]
-    try:
-        out = ble_dict.SIG_MAP[cic]
-    except KeyError:
-        return "Unrecognized SIG"
-
-    return out
+            if dev.name == "Bepob":
+                print(dev)

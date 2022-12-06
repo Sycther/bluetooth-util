@@ -6,25 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
-    <height>600</height>
+    <width>948</width>
+    <height>616</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <widget class="QWidget" name="horizontalWidget" native="true">
     <property name="geometry">
      <rect>
       <x>9</x>
       <y>-1</y>
-      <width>781</width>
-      <height>541</height>
+      <width>931</width>
+      <height>561</height>
      </rect>
     </property>
     <property name="sizePolicy">
-     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
@@ -42,12 +48,32 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Scan BLE Devices</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="list"/>
+      <widget class="QListWidget" name="list">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="saveBtn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Save Output</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -57,7 +83,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>805</width>
+     <width>948</width>
      <height>26</height>
     </rect>
    </property>
@@ -78,12 +104,29 @@
     </hint>
     <hint type="destinationlabel">
      <x>158</x>
-     <y>-17</y>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveNow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>900</x>
+     <y>285</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>931</x>
+     <y>360</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>scanNow()</slot>
+  <slot>saveNow()</slot>
  </slots>
 </ui>

@@ -42,14 +42,13 @@ install all the dependencies
 Your IDE might give an error while importing the some libraries, otherwise the library works.... somehow...
   
 ### Deliverables
-- [ ] Asyncronous Bluetooth Scanner
+- [x] Asyncronous Bluetooth Scanner
   - [x] Save devices to list
   - [ ] periodic scans (Optional)
-    - [ ] Remove lost devies after 2nd scan of no ping
-  - [ ] Interpret & Display Device Class
+  - [x] Interpret & Display Device Class
     - [x] CIC (Company ID)
     - [ ] COD (Class Of Device)
   - [ ] Detect Connected Devices
-- [ ] GUI
+- [x] GUI
   - [x] Design Layout
   - [x] Bluetooth scanning parralell to gui

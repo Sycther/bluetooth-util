@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>948</width>
-    <height>774</height>
+    <width>1258</width>
+    <height>771</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,15 +25,31 @@
      <rect>
       <x>20</x>
       <y>5</y>
-      <width>911</width>
+      <width>1233</width>
       <height>701</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
+     <item row="3" column="1" rowspan="2">
+      <widget class="QListWidget" name="list">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>700</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
       <widget class="QPushButton" name="scanBtn">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -43,10 +59,10 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="4" column="0">
       <widget class="QPushButton" name="saveBtn">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -56,15 +72,129 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1" rowspan="2">
-      <widget class="QListWidget" name="list">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+     <item row="3" column="2" rowspan="2">
+      <layout class="QFormLayout" name="formLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
        </property>
-      </widget>
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+       </property>
+       <property name="rowWrapPolicy">
+        <enum>QFormLayout::WrapLongRows</enum>
+       </property>
+       <property name="labelAlignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="horizontalSpacing">
+        <number>20</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>20</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="nameTxt">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Address</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="addrTxt">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>MetaData</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="detailsTxt">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
@@ -74,7 +204,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>948</width>
+     <width>1258</width>
      <height>26</height>
     </rect>
    </property>
@@ -106,8 +236,8 @@
    <slot>saveNow()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>900</x>
-     <y>285</y>
+     <x>128</x>
+     <y>665</y>
     </hint>
     <hint type="destinationlabel">
      <x>931</x>
@@ -115,9 +245,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>list</sender>
+   <signal>itemActivated(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateFormData(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>508</x>
+     <y>670</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1105</x>
+     <y>652</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>scanNow()</slot>
   <slot>saveNow()</slot>
+  <slot>updateFormData(QListWidgetItem*)</slot>
  </slots>
 </ui>

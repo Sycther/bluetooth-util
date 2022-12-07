@@ -4,6 +4,7 @@ import ble_dict
 import datetime
 import json
 from bleak import BLEDevice
+from typing import Dict
 
 from GUI import Ui_MainWindow
 
@@ -20,30 +21,47 @@ WIN_HEIGHT = 600
 
 class BLElistItem(QListWidgetItem):
 
-    def __init__(self, device = None):
+    def __init__(self, device = None, adv=None):
         super().__init__()
         self.address = device.address
         self.name = device.name
         #self.details:str = device.details
         self.rssi = device.rssi
-        self.metadata = device.metadata
+        self.update_adv(adv)
 
         self.setSelfText()
     
-    def parse_device_data(self) -> str:
-        out = ""
+    def update_adv(self, adv):
 
-        try:
-            data = self.metadata['manufacturer_data'].popitem()
-        except KeyError:
-            return "No Data Given"
-        cic = data[0]
-        cod = data[1]
-        try:
-            out = ble_dict.SIG_MAP[cic]
-        except KeyError:
-            return "Unrecognized SIG"
+        if(adv.service_uuids):
+            uuids = adv.service_uuids
+        else:
+            uuids = []
+        
+        if(adv.manufacturer_data):
+            data = adv.manufacturer_data.popitem()
+            cic = data[0]
+            data = data[1]
+        else:
+            cic = None
+            data = None
 
+        self.metadata = {
+            "uuids":uuids,
+            "manufacturer_data": {
+                "cic": cic,
+                "data": str(data)
+            }
+        }
+
+    def parse_cic(self):
+        if(self.metadata["manufacturer_data"]["cic"]):
+            try:
+                out = ble_dict.SIG_MAP[self.metadata["manufacturer_data"]["cic"]]
+            except KeyError:
+                return "Unrecognized SIG - {}".format(self.metadata["manufacturer_data"]["cic"])
+        else:
+            return "No SIG Given"
         return out
 
     def parse_rssi(self):
@@ -55,7 +73,7 @@ class BLElistItem(QListWidgetItem):
             return "Fair Signal Strength"
         elif self.rssi > -100:
             return "Poor Signal Strength"
-        elif self.rssi < -100:
+        elif self.rssi <= -100:
             return "No signal"
 
     def setSelfText(self):
@@ -65,36 +83,51 @@ class BLElistItem(QListWidgetItem):
         return self.address == other.address
 
     def __str__(self) -> str:
-        return "{}\n - {}\n - {}\n-{}".format(self.name, self.address,self.parse_device_data(), self.parse_rssi())
+        return "{}\n     - {}\n     - {}\n     - {}".format(self.name, self.address,self.parse_cic(), self.parse_rssi())
 
 class TestWindow(QMainWindow, Ui_MainWindow):
+
+    deviceList: Dict[str, BLElistItem] 
+    """
+    List of Seen Devices in BLE List Item
+    """
+
 
     def __init__(self):
         super(TestWindow, self).__init__()
         self.setupUi(self)
         self.scanner = BLEUtil.Scanner(self.callback)
-        self.deviceList : BLElistItem = []
+        self.deviceList = {}
 
     def callback(self, device, advertisment_data):
-        if not device in self.deviceList:
-            #out = "{}\n - {}\n - {}\n - {}\n - {}".format(device.name, device.address, self.scanner.parse_device_data(device), device.metadata,advertisment_data)
-            ## Create
-            dev = BLElistItem(device)
+        if not device.address in self.deviceList:
+            # Create
+            dev = BLElistItem(device, advertisment_data)
             self.list.addItem(dev)
-            self.deviceList.append(dev)
+            self.deviceList[dev.address] = dev
         else :
-            #Update
-            #index = self.deviceList.index(device)
-            #self.deviceList[index].metadata = device.metadata
-            #self.deviceList[index].setSelfText()
+            #print("Updating - {}\n     - {}".format(device, advertisment_data))
+            self.deviceList[device.address].update_adv(advertisment_data)
             pass
+
+    @asyncSlot()
+    async def updateFormData(self, bleItem: BLElistItem):
+        if(bleItem.name != None):
+            self.nameTxt.setText(bleItem.name)
+        else:
+            self.nameTxt.setText("None")
+        self.addrTxt.setText(bleItem.address)
+        self.detailsTxt.setText("UUIDS: {}\nRSSI: {}\nSIG: {}\nDATA: {}".format(bleItem.metadata["uuids"],bleItem.rssi,bleItem.metadata["manufacturer_data"]["cic"],bleItem.metadata["manufacturer_data"]["data"]))
 
     @asyncSlot()
     async def saveNow(self):
         dt = datetime.datetime.now()
         dumps = []
-        for device in self.deviceList:
-            dumps.append(device.__dict__)
+        for item in self.deviceList.values():
+            try:
+                dumps.append(item.__dict__)
+            except Exception as e:
+                print(e)
         with open("saves/{} - {}.{}.{}.json".format(dt.date(), dt.hour, dt.minute, dt.second), 'w') as f:
             json.dump(dumps, f, indent=4)
             
@@ -103,9 +136,9 @@ class TestWindow(QMainWindow, Ui_MainWindow):
     async def scanNow(self):
         print("Scanning")
         self.list.clear()
-        self.deviceList = []
+        self.deviceList.clear()
         try:
-            await self.scanner.scan(10)
+            await self.scanner.scan_ble(5)
             print("total: ", len(self.deviceList))
         except Exception as e:
             print(e)
@@ -138,7 +171,9 @@ async def main():
 if __name__ == "__main__":
     try:
         qasync.run(main())
-    #except asyncio.exceptions.CancelledError:
+    except asyncio.exceptions.CancelledError:
+        sys.exit(0)
+    except KeyboardInterrupt:
+        sys.exit(0)
     except Exception as e:
-        print(e)
         sys.exit(0)

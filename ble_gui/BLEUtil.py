@@ -1,6 +1,5 @@
 from bleak import BleakScanner
 import asyncio
-import bluetooth
 
 class Scanner(BleakScanner):    
 
@@ -14,9 +13,3 @@ class Scanner(BleakScanner):
         self.current_devices = []
         async with self:
             await asyncio.sleep(duration)
-
-        self.discovered_devices
-
-    async def scan(self, duration=5):
-        devices = bluetooth.discover_devices(duration=duration, lookup_class=True, lookup_names=True)
-        print(devices)

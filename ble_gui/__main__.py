@@ -1,6 +1,6 @@
 import asyncio
-import BLEUtil
-import ble_dict
+import BLEUtil as BLEUtil
+import ble_dict as ble_dict
 import datetime
 import json
 from bleak import BLEDevice

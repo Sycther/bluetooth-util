@@ -16,7 +16,7 @@ First step is clone the repository,
 
 Setup a virtual Python enviornment
 
-*Optional but recommended*
+*Optional but highly recommended*
 
     python -m virtualenv venv
 
@@ -29,6 +29,10 @@ Setup a virtual Python enviornment
 install all the dependencies
 
     python -m pip install -r requirements.txt
+
+## Run
+
+    python ble_gui
 
 ## Requirements
 - Python >= 3.9
